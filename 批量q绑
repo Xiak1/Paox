@@ -1,0 +1,33 @@
+import requests
+import time
+
+print("夏空宝宝")
+
+qq_nums = []
+#在同文件夹创建qq_numbers.txt
+with open('qq_numbers.txt', 'r') as file:
+    qq_nums = file.readlines()
+
+qq_nums = [qq.strip() for qq in qq_nums]
+
+for qq_num in qq_nums:
+    url = f"https://api.xywlapi.cc/qqcx2023?qq={qq_num}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+
+        status = data.get('status', 0)
+        message = data.get('message', '')
+
+        if status == 200 and message == '查询成功':
+            phone = data.get('phone', '未知')
+            phonediqu = data.get('phonediqu', '未知')
+
+            print(f"查询QQ号: {qq_num}")
+            print(f"手机号码: {phone}")
+            print(f"归属地: {phonediqu}")
+        else:
+            print(f"查询QQ号: {qq_num} - 查询失败")
+    
+    time.sleep(2)  
