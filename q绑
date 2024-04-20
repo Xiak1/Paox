@@ -1,0 +1,21 @@
+import requests
+print("夏空宝宝")
+qq_num = input("请输入要查询的QQ号码: ")
+url = f"https://api.xywlapi.cc/qqcx2023?qq={qq_num}"
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    
+    status = data.get('status', 0)
+    message = data.get('message', '')
+    
+    if status == 200 and message == '查询成功':
+        phone = data.get('phone', '未知')
+        phonediqu = data.get('phonediqu', '未知')
+       
+        print(f"手机号码: {phone}")
+        print(f"归属地: {phonediqu}")
+       
+    else:
+        print("查询失败")
